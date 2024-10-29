@@ -1,10 +1,11 @@
 from enum import Enum
 import os
-
 from dotenv import load_dotenv
 import google.generativeai as genai
 from tqdm import tqdm
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
+
+from screenshotscribe.utils import get_readable_time
 
 load_dotenv()
 genai.configure(api_key=os.environ['GEMINI_API_KEY'])
@@ -36,27 +37,27 @@ class FinishReason(Enum):
 
 def map_finish_reason(value):
     if value == 0:
-        return FinishReason.FINISH_REASON_UNSPECIFIED
+        return FinishReason.FINISH_REASON_UNSPECIFIED.name + ": " + FinishReason.FINISH_REASON_UNSPECIFIED.value
     elif value == 1:
-        return FinishReason.STOP
+        return FinishReason.STOP.name + ": " + FinishReason.STOP.value
     elif value == 2:
-        return FinishReason.MAX_TOKENS
+        return FinishReason.MAX_TOKENS.name + ": " + FinishReason.MAX_TOKENS.value
     elif value == 3:
-        return FinishReason.SAFETY
+        return FinishReason.SAFETY.name + ": " + FinishReason.SAFETY.value
     elif value == 4:
-        return FinishReason.RECITATION
+        return FinishReason.RECITATION.name + ": " + FinishReason.RECITATION.value
     elif value == 5:
-        return FinishReason.LANGUAGE
+        return FinishReason.LANGUAGE.name + ": " + FinishReason.LANGUAGE.value
     elif value == 6:
-        return FinishReason.OTHER
+        return FinishReason.OTHER.name + ": " + FinishReason.OTHER.value
     elif value == 7:
-        return FinishReason.BLOCKLIST
+        return FinishReason.BLOCKLIST.name + ": " + FinishReason.BLOCKLIST.value
     elif value == 8:
-        return FinishReason.PROHIBITED_CONTENT
+        return FinishReason.PROHIBITED_CONTENT.name + ": " + FinishReason.PROHIBITED_CONTENT.value
     elif value == 9:
-        return FinishReason.SPII
+        return FinishReason.SPII.name + ": " + FinishReason.SPII.value
     elif value == 10:
-        return FinishReason.MALFORMED_FUNCTION_CALL
+        return FinishReason.MALFORMED_FUNCTION_CALL.name + ": " + FinishReason.MALFORMED_FUNCTION_CALL.value
     else:
         return "Unknown"
 
@@ -73,10 +74,10 @@ def handle_finish_reason(api_response):
         if finish_reason_enum == 1:
             return 1
         else:
-            # use mapping function to get the enum name
+            # use mapping function to get the enum name and value
             finish_reason_str = map_finish_reason(finish_reason_enum)
 
-            message = f"Error: Gemini API returned {
+            message = f"Gemini API returned FinishReason.{
                 finish_reason_str} https://ai.google.dev/api/generate-content#FinishReason"
     else:
         message = "Error: No candidates returned."
@@ -86,7 +87,7 @@ def handle_finish_reason(api_response):
 
 def prompt_API(image_path):
     filename = os.path.basename(image_path)
-    date_created = os.path.getctime(image_path)
+    date_created = get_readable_time(os.path.getctime(image_path))
 
     myfile = genai.upload_file(image_path)
     response = model.generate_content(myfile)

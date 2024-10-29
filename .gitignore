@@ -1,6 +1,8 @@
 *.local
 images_to_process/*
 transcribed.docx
+transcribed.md
+transcribed.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
