@@ -11,7 +11,7 @@ def scan_for_images(images_dir=os.path.abspath(os.path.join(os.curdir, 'images_t
     supported_extensions = ('.png', '.jpg', '.jpeg', '.webp', '.heic', '.heif',
                             '.PNG', '.JPG', '.JPEG', '.WEBP', '.HEIC', '.HEIF')
     image_paths = []
-    
+
     for root, dirs, files in os.walk(images_dir):
         for file in files:
             if file.endswith(supported_extensions):
@@ -21,17 +21,17 @@ def scan_for_images(images_dir=os.path.abspath(os.path.join(os.curdir, 'images_t
 
 
 def get_output_type():
-    valid_commands = {'j', 'm', 'd'}
+    valid_commands = {'n', 'm', 'd'}
 
     while True:
         command = input(
-            "Enter a file format to output: 'j' for json, 'm' for markdown, or 'd' for docx\n").strip().lower()
+            "Would you like a formatted output file? Enter: 'm' for markdown, or 'd' for docx, or 'n' for no\n").strip().lower()
 
         if command in valid_commands:
             return command
         else:
             print(
-                "Invalid input. Please enter 'j' for json, 'm' for markdown, or 'd' for docx\n")
+                "Invalid input. Please enter 'm' for markdown, or 'd' for docx, or 'n' for no\n")
 
 
 def main():
@@ -43,14 +43,14 @@ def main():
 
     generated_data = generate_text_gemini(image_paths)
 
+    filename = 'transcribed.json'
+    with open(filename, 'w') as json_file:
+        json.dump(generated_data, json_file, indent=4)
+        print(f'json file created at {filename}')
+
     output_type = get_output_type()
 
-    if output_type == 'j':
-        filename = 'transcribed.json'
-        with open(filename, 'w') as json_file:
-            json.dump(generated_data, json_file, indent=4)
-        print(f'JSON file created at {filename}')
-    elif output_type == 'm':
+    if output_type == 'm':
         output_markdown(generated_data)
     elif output_type == 'd':
         output_document(generated_data)

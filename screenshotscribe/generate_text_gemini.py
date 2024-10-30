@@ -17,7 +17,7 @@ model = genai.GenerativeModel(
         HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_ONLY_HIGH,
         HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_ONLY_HIGH
     },
-    system_instruction="You are an assistant tasked with accurately transcribing text from user-submitted images. Return the text in string format but leave out content clearly irrelevant to the image subject. For example- UI elements, system time in a phone screenshot or an ad near a social media post. If no text is found in the image return '<NO TEXT FOUND>'"
+    system_instruction="You are an assistant tasked with accurately transcribing text from user-submitted images. Return the text in string format but leave out content clearly irrelevant to the image subject. For example- UI elements, system time in a phone screenshot or an ad near a social media post. If the image depicts conversation between participants such as a chat history or social media thread, label each speaker in this format- [@example_person]: Example dialogue. If no display name is available for a speaker, identify them using sequential letters like so- [SPEAKER A]. If no text is found in the image return '<NO TEXT FOUND>'"
 )
 
 
