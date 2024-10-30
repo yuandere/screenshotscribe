@@ -14,7 +14,7 @@ def output_markdown(generated_data):
     status = f'**{len(generated_data)} images successfully transcribed**\n\n' if errors == 0 else f'**{errors}/{len(generated_data)} images not able to be transcribed. Review each corresponding finish reason for more information.**\n\n'
 
     filename = 'transcribed.md'
-    with open(filename, 'w') as md_file:
+    with open(filename, 'w', encoding='utf-8', errors='ignore') as md_file:
         md_file.write(status + markdown_content)
 
     print(f'Markdown file generated at {filename}')
