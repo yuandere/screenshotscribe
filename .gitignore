@@ -1,8 +1,11 @@
 *.local
+*.local.*
 images_to_process/*
+!images_to_process/.gitkeep
 transcribed.docx
 transcribed.md
 transcribed.json
+TEST_IMAGES/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
