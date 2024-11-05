@@ -1,5 +1,7 @@
 from enum import Enum
 import os
+import time
+
 from dotenv import load_dotenv
 import google.generativeai as genai
 from tqdm import tqdm
@@ -106,10 +108,32 @@ def prompt_API(image_path):
     }
 
 
-def generate_text_gemini(image_paths):
+def generate_text_gemini(image_paths, retries=2, delay=5):
     data = []
+
     for image_path in tqdm(image_paths):
-        image_data = prompt_API(image_path)
-        data.append(image_data)
+        attempts = 0
+
+        while attempts < retries:
+            try:
+                image_data = prompt_API(image_path)
+                data.append(image_data)
+                break
+            except Exception as e:
+                attempts += 1
+                print(f"\nError processing image {image_path}: {e}")
+                if attempts < retries:
+                    print(f"Retrying in {delay} seconds...")
+                    time.sleep(delay)
+                else:
+                    print(f"Failed to process all images after {
+                          retries} attempts.")
+                    data.append({
+                        "filename": os.path.basename(image_path),
+                        "date_created": get_readable_time(os.path.getctime(image_path)),
+                        "text": "Error: could not process all images",
+                        "success": False
+                    })
+                    return data
 
     return data
