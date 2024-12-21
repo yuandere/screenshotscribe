@@ -8,7 +8,7 @@
   <h2 align="center">Screenshot Scribe</h2>
 
   <p align="center">
-    Perform batch OCR processing on your images and screenshots, and gather the text into one convenient file with Gemini 1.5 Flash.
+    Perform batch OCR processing on your images and screenshots, and gather the text into one formatted file with Gemini 1.5 Flash.
     <br />
     <br />
   </p>
