@@ -87,14 +87,6 @@ Contributions are appreciated! If you have a suggestion that would make this bet
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<!-- CONTACT -->
-
-## Contact
-
-Discord - [@al_doub](https://discord.com/)
-
-X/Twitter - [@yuandere](https://x.com/yuandere)
-
 <!-- ACKNOWLEDGMENTS -->
 
 ## Acknowledgments
