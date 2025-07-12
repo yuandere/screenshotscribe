@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 import sys
@@ -34,11 +35,15 @@ def get_output_type():
                 "Invalid input. Please enter 'm' for markdown, or 'd' for docx, or 'n' for no\n")
 
 
-def main():
+def scribe(args: argparse.Namespace) -> None:
+    """The main logic for screenshotscribe."""
+    output_type = args.type or get_output_type()
+
     image_paths = scan_for_images()
-    if len(image_paths) == 0:
+    if not image_paths:
         print('No images found in the target directory. Exiting...')
-        sys.exit()
+        return
+
     print(f'{len(image_paths)} images found. Working...\n')
 
     generated_data = generate_text_gemini(image_paths)
@@ -48,13 +53,30 @@ def main():
         json.dump(generated_data, json_file, indent=4)
         print(f'json file created at {filename}')
 
-    output_type = get_output_type()
-
     if output_type == 'm':
         output_markdown(generated_data)
     elif output_type == 'd':
         output_document(generated_data)
 
 
+def main(argv: list[str] | None = None) -> int:
+    """Parse command-line arguments and run the main program."""
+    parser = argparse.ArgumentParser(
+        description='Scan images and generate text')
+    parser.add_argument('-t', '--type', type=str, choices=['j', 'm', 'd'],
+                        help='The output file type: (j)son, (m)arkdown, or (d)ocx')
+    args = parser.parse_args(argv)
+
+    if args.type:
+        print(f"Output file type selected: {args.type}")
+
+    try:
+        scribe(args)
+    except KeyboardInterrupt:
+        print("\nProgram interrupted, exiting...")
+        return 1
+    return 0
+
+
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
