@@ -24,7 +24,7 @@
   </a>
 </div>
 
-I take lots of screenshots of things that I want to reference later but almost never actually do. This tool is intended to make accessing that info much easier.
+Ever take lots of screenshots or bookmarks to reference later but never actually do? This tool is intended to make processing text from those images and screenshots much easier.
 
 Gemini 1.5 Flash was chosen for the job since it greatly outperforms open-source OCR solutions like Tesseract and EasyOCR, but is [quicker](https://arxiv.org/abs/2403.05530) and [free/cheaper](https://llmpricecheck.com/) relative to many other multimodal LLMs.
 
@@ -45,8 +45,8 @@ Gemini 1.5 Flash was chosen for the job since it greatly outperforms open-source
 You will need to have the following:
 
 - [Python 3.12 or up](https://www.python.org/)
-- [Poetry 1.8 or up](https://python-poetry.org/)
-- [Free API key from Google AI Studio](https://aistudio.google.com/) \(note usage limits\)
+- [uv](https://docs.astral.sh/uv/)
+- [Free API key from Google AI Studio](https://aistudio.google.com/)
 
 ### Installation
 
@@ -54,20 +54,14 @@ You will need to have the following:
    ```sh
    git clone https://github.com/yuandere/screenshotscribe
    ```
-2. Install Poetry packages and start a virtual environment
-   ```sh
-   poetry install
-
-   poetry shell
-   ```
-3. Create a `.env` file in the project directory and add your API key
+2. Create a `.env` file in the project directory and add your API key
    ```
    GEMINI_API_KEY = XXXXXX
    ```
-4. Move any images you want processed into the folder /images_to_process
-5. Run 
+3. Move any images you want processed into the folder /images_to_process
+4. Run 
    ```
-   screenshotscribe
+   uv screenshotscribe
    ```
 
 
@@ -75,13 +69,7 @@ You will need to have the following:
 
 ## Contributing
 
-Contributions are appreciated! If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+Contributions are welcome. Feel free to create a pull request or submit an issue for new features, fixing bugs, or improving documentation.
 
 ## License
 
@@ -91,8 +79,4 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Acknowledgments
 
-
-- [Choose an Open Source License](https://choosealicense.com)
-- [markdownguide](https://www.markdownguide.org/cheat-sheet/)
 - [flaticon](https://www.flaticon.com/free-icon/generative-image_16649299)
-- [README template](https://github.com/othneildrew/Best-README-Template)
