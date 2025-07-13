@@ -8,7 +8,7 @@ from .output_document import output_document
 from .output_markdown import output_markdown
 
 
-def scan_for_images(images_dir=os.path.abspath(os.path.join(os.curdir, 'TEST_IMAGES'))):
+def scan_for_images(images_dir=os.path.abspath(os.path.join(os.curdir, 'images_to_process'))):
     supported_extensions = ('.png', '.jpg', '.jpeg', '.webp', '.heic', '.heif',
                             '.PNG', '.JPG', '.JPEG', '.WEBP', '.HEIC', '.HEIF')
     image_paths = []
