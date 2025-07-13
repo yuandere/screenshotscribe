@@ -61,7 +61,11 @@ You will need to have the following:
 3. Move any images you want processed into the folder /images_to_process
 4. Run 
    ```
-   uv screenshotscribe
+   uv run screenshotscribe
+   ```
+   optionally add the -t flag to specify output file type: (j)son, (m)arkdown, or (d)ocx
+   ```
+   uv run screenshotscribe -t m
    ```
 
 
