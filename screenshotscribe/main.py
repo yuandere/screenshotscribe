@@ -22,17 +22,17 @@ def scan_for_images(images_dir=os.path.abspath(os.path.join(os.curdir, 'images_t
 
 
 def get_output_type():
-    valid_commands = {'n', 'm', 'd'}
+    valid_commands = {'j', 'm', 'd'}
 
     while True:
         command = input(
-            "Would you like a formatted output file? Enter: 'm' for markdown, or 'd' for docx, or 'n' for no\n").strip().lower()
+            "Enter the output file type: (j)son, (m)arkdown, or (d)ocx\n").strip().lower()
 
         if command in valid_commands:
             return command
         else:
             print(
-                "Invalid input. Please enter 'm' for markdown, or 'd' for docx, or 'n' for no\n")
+                "Invalid input. Enter 'j' for json, 'm' for markdown, or 'd' for docx\n")
 
 
 def scribe(args: argparse.Namespace) -> None:

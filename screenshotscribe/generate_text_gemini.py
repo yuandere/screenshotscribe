@@ -19,7 +19,7 @@ model = genai.GenerativeModel(
         HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_ONLY_HIGH,
         HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_ONLY_HIGH
     },
-    system_instruction="You are an assistant tasked with accurately transcribing text from user-submitted images. Return the text in string format but leave out content clearly irrelevant to the image subject. For example- UI elements, system time in a phone screenshot or an ad near a social media post. If the image depicts conversation between participants such as a chat history or social media thread, label each speaker in this format- [@example_person]: Example dialogue. If no display name is available for a speaker, identify them using sequential letters like so- [SPEAKER A]. If no text is found in the image return '<NO TEXT FOUND>'"
+    system_instruction="You are an assistant tasked with accurately transcribing text from user-submitted images and screenshots. Return the text in string format but leave out content clearly irrelevant to the image subject. For example- text in UI elements, device system time, or an ad near a social media post. If the image depicts conversation between participants such as a chat history or social media thread, label each speaker with available information in this format- [eXaMpLe PeRsOn @example_person]: Example dialogue. If no display name is available for a speaker, identify them using sequential letters like so- [SPEAKER A]. If no text is found in the image return '<NO TEXT FOUND>'"
 )
 
 
@@ -113,10 +113,12 @@ def generate_text_gemini(image_paths, retries=2, delay=5):
 
     for image_path in tqdm(image_paths):
         attempts = 0
-
+        failures = 0
         while attempts < retries:
             try:
                 image_data = prompt_API(image_path)
+                if not image_data['success']:
+                    failures += 1
                 data.append(image_data)
                 break
             except Exception as e:
@@ -135,5 +137,7 @@ def generate_text_gemini(image_paths, retries=2, delay=5):
                         "success": False
                     })
                     return data
+
+    print(f"\n{len(data) - failures}/{len(data)} images successfully transcribed. {"Review finish reasons in output for more information" if failures > 0 else ""}")
 
     return data
